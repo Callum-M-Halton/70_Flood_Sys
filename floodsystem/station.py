@@ -5,7 +5,7 @@
 for manipulating/modifying station data
 
 """
-
+ 
 
 class MonitoringStation:
     """This class represents a river level monitoring station"""
@@ -38,3 +38,28 @@ class MonitoringStation:
         d += "   river:         {}\n".format(self.river)
         d += "   typical range: {}".format(self.typical_range)
         return d
+    
+    def typical_range_consistent(self):
+        """
+        Returns true if the typical range of high/low values is consistent
+        Returns false is the range is inconsistent
+        """
+        if self.typical_range != None:
+            if self.typical_range[1] > self.typical_range[0]:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+def inconsistent_typical_range_stations(stations):
+    """
+    Returns a list of stations with an inconsistent high/low range
+    """
+    inconsistent_stations = []
+    for station in stations:
+        if not station.typical_range_consistent():
+            inconsistent_stations.append(station)
+
+    return inconsistent_stations
+
