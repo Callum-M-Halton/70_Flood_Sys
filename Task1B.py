@@ -1,6 +1,3 @@
-from fileinput import close
-from math import dist
-from turtle import distance
 from floodsystem.geo import stations_by_distance
 from floodsystem.stationdata import build_station_list
 
