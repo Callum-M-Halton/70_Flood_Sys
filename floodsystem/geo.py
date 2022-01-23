@@ -6,4 +6,18 @@ geographical data.
 
 """
 
-from .utils import sorted_by_key  # noqa
+from .utils import sorted_by_key # noqa
+from haversine import haversine
+
+def stations_by_distance(stations, p):
+    """
+    With aruments being a list of stations (stations) and a coordinate (p):
+        Returns a list of stations and their distance from coordinate p
+    """
+    distance_list = []
+    for station in stations:
+        distance = haversine(station.coord, p)
+        distance_list.append((station, distance))
+
+    distance_list = sorted_by_key(distance_list, 1)
+    return distance_list
