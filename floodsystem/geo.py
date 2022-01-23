@@ -21,3 +21,18 @@ def stations_by_distance(stations, p):
 
     distance_list = sorted_by_key(distance_list, 1)
     return distance_list
+
+def stations_within_radius(stations, centre, r):
+    """
+    Returns a list of all stations within radius r of a geographic coordinate x
+    """
+    stations_list = [] #list of all stations within radius r of the centre point
+    distance_list = stations_by_distance(stations, centre)
+    for pair in distance_list: 
+        if pair[1] < r:
+            stations_list.append(pair[0])
+        else:
+            break
+    return stations_list 
+            
+        
