@@ -11,5 +11,10 @@ def test_station_radius():
         sorted_stations.append(station.name)
 
     sorted_stations.sort()
+
+    assert sorted_stations == ['Bin Brook', 'Cambridge Baits Bite', "Cambridge Byron's Pool",
+ 'Cambridge Jesus Lock', 'Comberton', 'Dernford', 'Girton',
+ 'Haslingfield Burnt Mill', 'Lode', 'Oakington', 'Stapleford']
+
     print(sorted_stations)
 test_station_radius()
