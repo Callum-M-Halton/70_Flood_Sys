@@ -1,7 +1,7 @@
 from floodsystem.geo import stations_within_radius
 from floodsystem.stationdata import build_station_list
 
-def test_station_radius():
+def demonstrate_station_radius():
     """
     Prints a sorted list of the names of the stations within a radius r of the cambridge city centre
     """
@@ -17,4 +17,4 @@ def test_station_radius():
  'Haslingfield Burnt Mill', 'Lode', 'Oakington', 'Stapleford']
 
     print(sorted_stations)
-test_station_radius()
+demonstrate_station_radius()
