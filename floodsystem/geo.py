@@ -11,7 +11,7 @@ from haversine import haversine
 
 def stations_by_distance(stations, p):
     """
-    With aruments being a list of stations (stations) and a coordinate (p):
+    With arguments being a list of stations (stations) and a coordinate (p):
         Returns a list of stations and their distance from coordinate p
     """
     distance_list = []
