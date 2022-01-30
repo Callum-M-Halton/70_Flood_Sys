@@ -1,5 +1,5 @@
 from distutils.command.build import build
-from floodsystem.geo import stations_by_distance, stations_within_radius
+import floodsystem.geo
 from floodsystem.stationdata import build_station_list
 
 
@@ -9,7 +9,7 @@ def test_stations_by_distance():
     """
     stations = build_station_list()
     p = (52.2053, 0.1218) #Coordinate of Cambridge city centre
-    station_distances = stations_by_distance(stations, p)
+    station_distances = floodsystem.geo.stations_by_distance(stations, p)
 
     closest_ten = [] 
     furthest_ten = []
@@ -27,7 +27,7 @@ def test_stations_within_radius():
     """
     Tests the stations_within_radius function in geo.py
     """
-    stations_list = stations_within_radius(build_station_list(), (52.2053, 0.1218), 10)
+    stations_list = floodsystem.geo.stations_within_radius(build_station_list(), (52.2053, 0.1218), 10)
     sorted_stations = []
     for station in stations_list:
         sorted_stations.append(station.name)
