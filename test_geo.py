@@ -1,5 +1,5 @@
 import haversine
-
+from haversine import haversine
 from distutils.command.build import build
 from floodsystem.geo import stations_by_distance
 from floodsystem.stationdata import build_station_list
