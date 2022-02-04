@@ -44,7 +44,7 @@ def build_station_list(use_cache=True):
             typical_range = None
 
         try:
-            # Create mesure station object if all required data is
+            # Create monitoring station object if all required data is
             # available, and add to list
             s = MonitoringStation(
                 station_id=e['@id'],
