@@ -35,4 +35,55 @@ def stations_within_radius(stations, centre, r):
             break
     return stations_list 
             
-        
+def rivers_with_station(stations):
+    """
+    Given a list of station objects, returns a set with the names of the
+    rivers with a monitoring station. As the container is a set, there are no duplicates.
+    """
+    stationed_rivers = set()
+    for station in stations:
+        if station.river:
+            stationed_rivers.add(station.river)
+
+    return stationed_rivers
+
+
+def stations_by_river(stations):
+    """
+    Given a list of station objects, returns a dictionary that maps river names
+    to a list of station objects on a given river
+    """
+    stations_by_rivername = {}
+    for station in stations:
+        if station.river:
+            if station.river in stations_by_rivername:
+                stations_by_rivername[station.river].append(station.name)
+            else:
+                stations_by_rivername[station.river] = [station.name]
+    return stations_by_rivername
+'''
+def rivers_by_station_number(stations, N):
+    """
+    Determines the N rivers with the greatest number of monitoring stations 
+    and returns a list of (river name, number of stations) tuples,
+    sorted by the number of stations. In the case that there are more rivers with
+    the same number of stations as the Nth entry, these rivers are included in the list. 
+    """
+    river_station_numbers = [] # Use a dict here and then convert when sorting?!
+    for station in stations:
+        if station.river:
+            newPairNeeded = True
+            for pair in rivers_by_station_number:
+                if pair[0] == station.river:
+                    pair[1] += 1
+                    newPairNeeded = False
+                    break
+            if newPairNeeded:
+                rivers_by_station_number.append((station.river, 1))
+
+    top_N_rivers_by_station_number = []
+    for i in range(N):
+
+
+    return 
+'''
