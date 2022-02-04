@@ -61,7 +61,7 @@ def stations_by_river(stations):
             else:
                 stations_by_rivername[station.river] = [station.name]
     return stations_by_rivername
-'''
+
 def rivers_by_station_number(stations, N):
     """
     Determines the N rivers with the greatest number of monitoring stations 
@@ -69,21 +69,32 @@ def rivers_by_station_number(stations, N):
     sorted by the number of stations. In the case that there are more rivers with
     the same number of stations as the Nth entry, these rivers are included in the list. 
     """
-    river_station_numbers = [] # Use a dict here and then convert when sorting?!
-    for station in stations:
-        if station.river:
-            newPairNeeded = True
-            for pair in rivers_by_station_number:
-                if pair[0] == station.river:
-                    pair[1] += 1
-                    newPairNeeded = False
-                    break
-            if newPairNeeded:
-                rivers_by_station_number.append((station.river, 1))
 
+    # Creates count of stations for earch river
+    river_station_numbers = {}
+    for station in stations:
+        if station.river in river_station_numbers:
+            river_station_numbers[station.river] += 1
+        else:
+            river_station_numbers[station.river] = 1
+    
+    # Selects top N rivers by station number and returns them as tuple list
+    remaining_river_pairs = river_station_numbers.items()
     top_N_rivers_by_station_number = []
     for i in range(N):
+        if remaining_river_pairs:
+            highest = 0
+            highest_pairs = []
+            for river_pair in remaining_river_pairs:
+                if river_pair[1] > highest:
+                    highest_pairs = [river_pair]
+                    highest = river_pair[1]
+                elif river_pair[1] == highest:
+                    highest_pairs.append(river_pair)
 
-
-    return 
-'''
+            remaining_river_pairs = [river_pair for river_pair in remaining_river_pairs if river_pair not in highest_pairs]
+            top_N_rivers_by_station_number = top_N_rivers_by_station_number + highest_pairs
+        else:
+            break
+    
+    return top_N_rivers_by_station_number
