@@ -48,8 +48,6 @@ def test_rivers_with_station():
     rivers_with_station_set = rivers_with_station(build_station_list())
     # Checks container type
     assert type(rivers_with_station_set) == set
-    # Checks number of rivers contained
-    assert len(rivers_with_station_set) == 949
     # Checks last 20 rivers alpabetically
     assert sorted(rivers_with_station_set)[-20:] == ['Winterbourne Stream', 'Withy Brook', 'Withycombe Brook', 'Wiza Beck', 'Wood Brook', 'Woodbridge Brook', 'Wool Brook', 'Wooler Water', 'Wootton Brook', 'Worsley Brook', 'Wortley Beck', 'Wotton Brook', 'Wraysbury River', 'Wydon Burn', 'Wyke Beck', 'Wymans Brook', 'Yazor Brook', 'Yeading Brook', 'Yeading Brook (Eastern Arm)', 'Yeolands Stream']
 
