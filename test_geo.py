@@ -1,6 +1,6 @@
 
 from distutils.command.build import build
-from floodsystem.geo import stations_by_distance, stations_within_radius
+from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station, stations_by_river, rivers_by_station_number
 from floodsystem.stationdata import build_station_list
 
 
@@ -40,3 +40,39 @@ def test_stations_within_radius():
     assert sorted_stations == ['Bin Brook', 'Cambridge Baits Bite', "Cambridge Byron's Pool",
 'Cambridge Jesus Lock', 'Comberton', 'Dernford', 'Girton',
  'Haslingfield Burnt Mill', 'Lode', 'Oakington', 'Stapleford']
+
+def test_rivers_with_station():
+    """
+    Tests the rivers_with_station function in geo.py
+    """
+    rivers_with_station_set = rivers_with_station(build_station_list())
+    # Checks container type
+    assert type(rivers_with_station_set) == set
+    # Checks number of rivers contained
+    assert len(rivers_with_station_set) == 949
+    # Checks last 20 rivers alpabetically
+    assert sorted(rivers_with_station_set)[-20:] == ['Winterbourne Stream', 'Withy Brook', 'Withycombe Brook', 'Wiza Beck', 'Wood Brook', 'Woodbridge Brook', 'Wool Brook', 'Wooler Water', 'Wootton Brook', 'Worsley Brook', 'Wortley Beck', 'Wotton Brook', 'Wraysbury River', 'Wydon Burn', 'Wyke Beck', 'Wymans Brook', 'Yazor Brook', 'Yeading Brook', 'Yeading Brook (Eastern Arm)', 'Yeolands Stream']
+
+
+def test_stations_by_river():
+    """
+    Tests the stations_by_river function in geo.py
+    """
+    stations_by_rivername = stations_by_river(build_station_list())
+    # Checks stations_by_rivername is a dict
+    assert type(stations_by_rivername) == dict
+    # Checks river sets for the 3 rivers in the demo
+    expected_stations = {
+        'River Aire'   : ['Airmyn', 'Apperley Bridge', 'Armley', 'Beal Weir Bridge', 'Bingley', 'Birkin Holme Washlands', 'Carlton Bridge', 'Castleford', 'Chapel Haddlesey', 'Cononley', 'Cottingley Bridge', 'Ferrybridge Lock', 'Fleet Weir', 'Gargrave', 'Kildwick', 'Kirkstall Abbey', 'Knottingley Lock', 'Leeds Crown Point', 'Leeds Crown Point Flood Alleviation Scheme', 'Leeds Knostrop Weir Flood Alleviation Scheme', 'Oulton Lemonroyd', 'Saltaire', 'Snaygill', 'Stockbridge'],
+        'River Cam'    : ['Cam', 'Cambridge', 'Cambridge Baits Bite', 'Cambridge Jesus Lock', 'Dernford', 'Great Chesterford', 'Weston Bampfylde'],
+        'River Thames' : ['Abingdon Lock', 'Bell Weir', 'Benson Lock', 'Boulters Lock', 'Bray Lock', 'Buscot Lock', 'Caversham Lock', 'Chertsey Lock', 'Cleeve Lock', 'Clifton Lock', 'Cookham Lock', 'Cricklade', 'Culham Lock', 'Days Lock', 'Ewen', 'Eynsham Lock', 'Farmoor', 'Godstow Lock', 'Goring Lock', 'Grafton Lock', 'Hannington Bridge', 'Hurley Lock', 'Iffley Lock', 'Kings Lock', 'Kingston', 'Maidenhead', 'Mapledurham Lock', 'Marlow Lock', 'Marsh Lock', 'Molesey Lock', 'Northmoor Lock', 'Old Windsor Lock', 'Osney Lock', 'Penton Hook', 'Pinkhill Lock', 'Radcot Lock', 'Reading', 'Romney Lock', 'Rushey Lock', 'Sandford-on-Thames', 'Shepperton Lock', 'Shifford Lock', 'Shiplake Lock', 'Somerford Keynes', 'Sonning Lock', 'St Johns Lock', 'Staines', 'Sunbury  Lock', 'Sutton Courtenay', 'Teddington Lock', 'Thames Ditton Island', 'Trowlock Island', 'Walton', 'Whitchurch Lock', 'Windsor Park']
+    }
+    for rivername in expected_stations:
+        assert sorted(stations_by_rivername[rivername]) == expected_stations[rivername]
+
+'''
+def test_rivers_by_station_number():
+    """
+    Tests the rivers_by_station_number function in geo.py
+    """
+'''
