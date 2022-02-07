@@ -21,4 +21,6 @@ def demonstrate_stations_by_distance():
     print("Furthest 10: \n", furthest_ten)
 
     
-demonstrate_stations_by_distance()
+if __name__ == "__main__":
+    print("*** Task 1B: CUED Part IA Flood Warning System ***")
+    demonstrate_stations_by_distance()
