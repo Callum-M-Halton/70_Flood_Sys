@@ -2,27 +2,30 @@
 from distutils.command.build import build
 from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station, stations_by_river, rivers_by_station_number
 from floodsystem.stationdata import build_station_list
+from utils_for_tests import StockStation
 
 
 def test_stations_by_distance():
     """
     Tests the stations by distance function in geo.py
     """
-    stations = build_station_list()
+    
     p = (52.2053, 0.1218) #Coordinate of Cambridge city centre
+    dict_1 = {"name" : "Station1",
+              "coord" : (50, 1)  
+                } #Station 1 should be closer than station 2
+    dict_2 = {"name" : "Station2",
+              "coord" : (75, 25)  
+                } #Station 2 should be further away than station 1
+    station1 = StockStation(dict_1)
+    station2 = StockStation(dict_2)
+    stations = [station2, station1] #Purposefully inputted in the wrong order to ensure sort works correctly
+    
     station_distances = stations_by_distance(stations, p)
-
-    closest_ten = [] 
-    furthest_ten = []
     
-    for pair in station_distances[:10]: #Appends 10 closest stations to a list
-        closest_ten.append((pair[0].name, pair[0].town, pair[1]))
-    
-    for pair in station_distances[-10:]: #Appends 10 furthest stations to a list
-        furthest_ten.append((pair[0].name, pair[0].town, pair[1]))
-
-    assert closest_ten == [('Cambridge Jesus Lock', 'Cambridge', 0.840237595667494), ('Bin Brook', 'Cambridge', 2.502277543239629), ("Cambridge Byron's Pool", 'Grantchester', 4.07204948005424), ('Cambridge Baits Bite', 'Milton', 5.115596582531859), ('Girton', 'Girton', 5.227077565748483), ('Haslingfield Burnt Mill', 'Haslingfield', 7.0443978959918025), ('Oakington', 'Oakington', 7.12825901765745), ('Stapleford', 'Stapleford', 7.265704342799649), ('Comberton', 'Comberton', 7.735085060177142), ('Dernford', 'Great Shelford', 7.993872393303291)]
-    assert furthest_ten == [('Boscadjack', 'Wendron', 440.00325604140033), ('Gwithian', 'Gwithian', 442.0555261735786), ('Helston County Bridge', 'Helston', 443.3788620846717), ('Loe Pool', 'Helston', 445.0724593420217), ('Relubbus', 'Relubbus', 448.6500629265487), ('St Erth', 'St Erth', 449.0347773512542), ('St Ives Consols Farm', 'St Ives', 450.07409071624505), ('Penzance Tesco', 'Penzance', 456.38638836619003), ('Penzance Alverton', 'Penzance', 458.57727568406375), ('Penberth', 'Penberth', 467.53431870130544)]
+    assert len(station_distances) == 2 #Checks 2 stations are in the list
+    assert station_distances[0][1] < station_distances[1][1] #Checks the first station in the list is closer than the second 
+    assert station_distances[0][0].name == "Station1" #Checks that the closer station is actually at the start of the list 
 
 
 def test_stations_within_radius():
