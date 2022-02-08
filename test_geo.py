@@ -5,7 +5,7 @@ from distutils.command.build import build
 from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station, stations_by_river, rivers_by_station_number
 from floodsystem.stationdata import build_station_list
 from utils_for_tests import StockStation
-
+from haversine import haversine
 
 def test_stations_by_distance():
     """
@@ -34,17 +34,29 @@ def test_stations_within_radius():
     """
     Tests the stations_within_radius function in geo.py
     """
-
+    """
     stations_list = stations_within_radius(build_station_list(), (52.2053, 0.1218), 10)
     sorted_stations = []
     for station in stations_list:
         sorted_stations.append(station.name)
 
     sorted_stations.sort()
-
-    assert sorted_stations == ['Bin Brook', 'Cambridge Baits Bite', "Cambridge Byron's Pool",
-'Cambridge Jesus Lock', 'Comberton', 'Dernford', 'Girton',
- 'Haslingfield Burnt Mill', 'Lode', 'Oakington', 'Stapleford']
+    """
+    p = (52.2053, 0.1218) #Coordinate of Cambridge city centre
+    dict_1 = {"name" : "Station1",
+              "coord" : (50, 1)  
+                } #Station 1 should be closer than station 2
+    dict_2 = {"name" : "Station2",
+              "coord" : (75, 25) 
+                } #Station 2 is of a further radius than station 1 
+    radius = haversine(p, (50, 1)) + 0.5 #0.5 ensures no floating point errors when comparing next
+    station1 = StockStation(dict_1)
+    station2 = StockStation(dict_2)
+    stations = [station2, station1] #Creates list of stations
+    stations_in_radius = stations_within_radius(stations, p, radius)
+    assert len(stations_in_radius) == 1
+    assert stations_in_radius[0] == station1
+    
 
 def test_rivers_with_station():
     """

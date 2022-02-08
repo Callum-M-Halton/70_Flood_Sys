@@ -6,6 +6,7 @@
 
 from floodsystem.station import MonitoringStation, inconsistent_typical_range_stations
 from floodsystem.stationdata import build_station_list
+from utils_for_tests import StockStation
 
 
 def test_create_monitoring_station():
@@ -33,29 +34,36 @@ def test_typical_range_consistent():
     Tests the typical_range_consistent method in station.py
     """
     #Create stations with different typical ranges
-    s_id = "test-s-id"
-    m_id = "test-m-id"
-    label = "some station"
-    coord = (-2.0, 4.0)
-    trange1 = (-2.3, 3.4445)
-    trange2 = None
-    trange3 = (3.4445, -2.3)
-    river = "River X"
-    town = "My Town"
-    s1 = MonitoringStation(s_id, m_id, label, coord, trange1, river, town)
-    s2 = MonitoringStation(s_id, m_id, label, coord, trange2, river, town)
-    s3 = MonitoringStation(s_id, m_id, label, coord, trange3, river, town)
 
-    assert s1.typical_range_consistent() 
-    assert not s2.typical_range_consistent()
-    assert not s3.typical_range_consistent()
+    dict_1 = {"name" : "Station1",
+              "typical_range" : (-2.3, 3.4445) 
+                } #Station 1 should work as normal as high > low
+    dict_2 = {"name" : "Station2",
+              "typical_range" : (3.4445, -2.3) 
+                } #Station 2 should fail as high < low
+    dict_3 = {"name" : "Station2",
+            "typical_range" : None
+                } #Station 3 should fail as typical_range doesnt exist
+
+    station1 = StockStation(dict_1)
+    station2 = StockStation(dict_2)
+    station3 = StockStation(dict_3)
+    assert station1.typical_range_consistent() 
+    assert not station2.typical_range_consistent() 
+    assert not station3.typical_range_consistent()
 
 def test_inconsistent_typical_range_stations():
     """
     Tests the inconsistent_typical_range function in station.py
     """
-    stations = build_station_list()
-    list_of_stations = inconsistent_typical_range_stations(stations)
-    
-    for station in list_of_stations:
-        assert station.typical_range_consistent() == False
+    dict_1 = {"name" : "Station1",
+              "typical_range" : (-2.3, 3.4445) 
+                } #Station 1 is consistent as high > low
+    dict_2 = {"name" : "Station2",
+              "typical_range" : (3.4445, -2.3) 
+                }   #Should be returned in the list as low < high, therefore inconsistent
+    station1 = StockStation(dict_1)
+    station2 = StockStation(dict_2)
+    inconsistent = inconsistent_typical_range_stations([station1, station2])
+    assert len(inconsistent) == 1
+    assert inconsistent[0] == station2
