@@ -56,8 +56,14 @@ def test_inconsistent_typical_range_stations():
     """
     Tests the inconsistent_typical_range function in station.py
     """
-    stations = build_station_list()
-    list_of_stations = inconsistent_typical_range_stations(stations)
-    
-    for station in list_of_stations:
-        assert station.typical_range_consistent() == False
+    dict_1 = {"name" : "Station1",
+              "typical_range" : (-2.3, 3.4445) 
+                } #Station 1 is consistent as high > low
+    dict_2 = {"name" : "Station2",
+              "typical_range" : (3.4445, -2.3) 
+                }   #Should be returned in the list as low < high, therefore inconsistent
+    station1 = StockStation(dict_1)
+    station2 = StockStation(dict_2)
+    inconsistent = inconsistent_typical_range_stations([station1, station2])
+    assert len(inconsistent) == 1
+    assert inconsistent[0] == station2
