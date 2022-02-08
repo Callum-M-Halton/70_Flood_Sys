@@ -1,6 +1,12 @@
 from floodsystem.station import MonitoringStation
 
 class StockStation(MonitoringStation):
+    '''
+    Child Class of MonitoringStation which simplifies creation of stock
+    Monitoring Stations. It reduces the amount of input needed to create
+    a station with only a few custom attributes. This is useful for creating
+    lists of arbitrary stations for testing where only a few attributes change.
+    '''
     def __init__(self, custom):
         # Always Stock for existing tests
         s_id = "test-s-id"
