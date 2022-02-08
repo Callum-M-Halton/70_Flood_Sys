@@ -102,7 +102,7 @@ def test_rivers_by_station_number():
     # Generates 'triangle' of stations where each subsequent river has 
     # 0, 1 or 2 stations more than the previous river, the rivers are numbered
     # in order of generation so we'll know their correct order in the rankings
-    tot_rivers = 5
+    tot_rivers = 50
     duplicate_period = 3
     stations = []
     for riverNum in range(1, tot_rivers):
