@@ -70,7 +70,7 @@ def test_rivers_with_station():
     assert type(rivers_with_station_set) == set
     # Checks rivers_with_station_set against expected output
     assert rivers_with_station_set == {'a', 'b', 'c'}
-    a = StockStation({'river': 'a'})
+
 
 def test_stations_by_river():
     """
