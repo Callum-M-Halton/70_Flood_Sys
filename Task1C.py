@@ -17,4 +17,8 @@ def demonstrate_station_radius():
  'Haslingfield Burnt Mill', 'Lode', 'Oakington', 'Stapleford']
 
     print(sorted_stations)
-demonstrate_station_radius()
+
+
+if __name__ == "__main__":
+    print("*** Task 1C: CUED Part IA Flood Warning System ***")
+    demonstrate_station_radius()
