@@ -1,9 +1,6 @@
-from this import d
-from floodsystem.datafetcher import fetch_measure_levels
 from datetime import datetime, timedelta
 import numpy as np
 from floodsystem.stationdata import build_station_list
-import matplotlib.pyplot as plt
 
 def polyfit(dates, levels, p):
     """
