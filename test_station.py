@@ -67,3 +67,24 @@ def test_inconsistent_typical_range_stations():
     inconsistent = inconsistent_typical_range_stations([station1, station2])
     assert len(inconsistent) == 1
     assert inconsistent[0] == station2
+
+def test_relative_water_level():
+  """
+  Tests the test_relative_water_level method of station.py
+  """
+  # each test data element 'test' is composed of the typical range of the station
+  # followed by the water level to be assigned to the station
+  # followed by the relative water level expected to be calculated from 
+  # the typical range and water level
+  test_data = (
+    ((1, 2), 1,   0   ),
+    ((2, 3), 2.5, 0.5 ),
+    ((3, 4), 4,   1   )
+  )
+  
+  # for each test in test data, construct the test station and check
+  # its relative water level equals the expected level. 
+  for test in test_data:
+    test_station = StockStation({'typical_range' : test[0]})
+    test_station.latest_level = test[1]
+    assert test_station.relative_water_level() == test[2]
