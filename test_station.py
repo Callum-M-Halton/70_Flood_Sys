@@ -70,7 +70,7 @@ def test_inconsistent_typical_range_stations():
 
 def test_relative_water_level():
   """
-  Tests the test_relative_water_level method of station.py
+  Tests the relative_water_level method of station.py
   """
   # each test data element 'test' is composed of the typical range of the station
   # followed by the water level to be assigned to the station
