@@ -66,6 +66,10 @@ def get_towns_flood_times_ordered(stations):
     return town_flood_times.sort(reverse=False, key=(lambda pair : pair[1]))
 
 def risk_level_from_flood_time(flood_time):
+    """
+    Calculates the level of severity given the flood_time
+    Returns the risk severity (low, medium, high, severe)
+    """
     flood_time_thresholds = (
         ( 'severe'   , 0  ),
         ( 'high'     , 2  ),
@@ -74,7 +78,7 @@ def risk_level_from_flood_time(flood_time):
     )
 
     for threshold_pair in flood_time_thresholds:
-        if flood_time >= threshold_pair[1]
+        if flood_time >= threshold_pair[1]:
             risk_level = threshold_pair[0]
         else:
             break
