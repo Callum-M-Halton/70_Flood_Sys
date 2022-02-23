@@ -104,7 +104,7 @@ def get_stations_by_town(stations):
     Returns a dictionary consisting of a (key, value) pair of towns (key) and a list of the
     stations inside of them (value)
     """
-    towns = {} #dictionary of towns
+    towns = {} # dictionary of towns
     for station in stations:
         town = station.town 
         if town in towns:
