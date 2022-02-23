@@ -24,28 +24,26 @@ def get_flood_time(station):
     If the gradient is negative, returns an infinite time. 
     """
     # Define relative flood level at which flooding is expected
-    expected_flooding_rel_level = 4
+    expected_flooding_rel_level = 1.7
     rel_level = station.relative_water_level()
+    if rel_level == None:
+        return math.inf
     if rel_level >= expected_flooding_rel_level: #If already flooded
         return 0
 
-    level_day_ago = None
-    dates, levels = fetch_measure_levels(station.measure_id, dt=timedelta(days = 10))
-    for i in range(len(dates)-1, 0):
-        dt_hrs = (dates[-1] - dates[i]).total_seconds() / 3600.0 
-        print('a')
-        if dt_hrs >= 24:
-            level_day_ago = levels[i] #Calculates water level 1 day ago
-            break
-    
-    '''if level_day_ago == None:
-        print(dates)'''
-    
+    try:
+        level_day_ago = fetch_measure_levels(station.measure_id, dt=timedelta(days = 1))[1][-1]
+        test = level_day_ago + 1.0
+    except:
+        return math.inf
+   
     relative_level_grad_over_day = (
-        (rel_level - station.level_to_relative_level(level_day_ago))
-    / dt_hrs) #Calculates time until river floods
+        (rel_level - station.level_to_relative_level(level_day_ago))) #Calculates time until river floods
 
-    if relative_level_grad_over_day < 0: #i.e. never going to flood
+    if relative_level_grad_over_day > 0:
+        print(station.name, station.town)
+
+    if relative_level_grad_over_day <= 0: #i.e. never going to flood
         return math.inf #Returns infinite time until flooding
     else: #Floods in returned number of days
         return ((expected_flooding_rel_level - rel_level) / 
@@ -59,16 +57,17 @@ def get_towns_flood_times_ordered(stations):
     stations_by_town = get_stations_by_town(stations)
     town_flood_times = []
     for town in stations_by_town:
-        town_stations = stations_by_town[town] #List of stations by town
-        min_flood_time = math.inf #Start at infinity (hightest possible time)
+        town_stations = stations_by_town[town] # List of stations by town
+        min_flood_time = math.inf # Start at infinity (hightest possible time)
         for station in town_stations: 
-            flood_time = get_flood_time(station) #Gets flood time
+            flood_time = get_flood_time(station) # Gets flood time
             if flood_time < min_flood_time:
                 min_flood_time = flood_time 
-                #Only uses the minimum time to flood if a town has more than one station
+                # Only uses the minimum time to flood if a town has more than one station
         town_flood_times.append((town, min_flood_time))
     
-    return town_flood_times.sort(reverse=False, key=(lambda pair : pair[1]))
+    town_flood_times.sort(reverse=False, key=(lambda pair : pair[1]))
+    return town_flood_times
 
 def risk_level_from_flood_time(flood_time):
     """
@@ -77,9 +76,9 @@ def risk_level_from_flood_time(flood_time):
     """
     flood_time_thresholds = (
         ( 'severe'   , 0  ),
-        ( 'high'     , 2  ),
-        ( 'moderate' , 5  ),
-        ( 'low '     , 10 ),
+        ( 'high'     , 3  ),
+        ( 'moderate' , 7  ),
+        ( 'low'      , 14 ),
     )
 
     for threshold_pair in flood_time_thresholds:
