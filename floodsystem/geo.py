@@ -108,7 +108,7 @@ def get_stations_by_town(stations):
     for station in stations:
         town = station.town 
         if town in towns:
-            towns[town].append(station.name)
+            towns[town].append(station)
         else:
-            towns[town] = [station.name]
+            towns[town] = [station]
     return towns

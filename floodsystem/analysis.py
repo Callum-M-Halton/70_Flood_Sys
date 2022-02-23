@@ -29,12 +29,17 @@ def get_flood_time(station):
     if rel_level >= expected_flooding_rel_level: #If already flooded
         return 0
 
+    level_day_ago = None
     dates, levels = fetch_measure_levels(station.measure_id, dt=timedelta(days = 10))
     for i in range(len(dates)-1, 0):
         dt_hrs = (dates[-1] - dates[i]).total_seconds() / 3600.0 
+        print('a')
         if dt_hrs >= 24:
             level_day_ago = levels[i] #Calculates water level 1 day ago
             break
+    
+    '''if level_day_ago == None:
+        print(dates)'''
     
     relative_level_grad_over_day = (
         (rel_level - station.level_to_relative_level(level_day_ago))

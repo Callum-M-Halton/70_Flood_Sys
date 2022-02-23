@@ -21,10 +21,9 @@ def run():
             previous_flood_time = flood_time
             current_rank += 1
         
-        print(f"{current_rank}.", f"{town_pair[0]}:", risk_level))    
-        
-    '''
+        print(f"{current_rank}.", f"{town_pair[0]}:", risk_level)
+
 
 if __name__ == "__main__":
-    print("*** Task 2B: CUED Part IA Flood Warning System ***")
+    print("*** Task 2G: CUED Part IA Flood Warning System ***")
     run()
