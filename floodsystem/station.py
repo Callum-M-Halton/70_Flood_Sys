@@ -34,6 +34,8 @@ class MonitoringStation:
         Converts and returns the given level as a fraction of the typical range,
         i.e. a ratio of 1.0 corresponds to a level at the typical high and
         a ratio of 0.0 corresponds to a level at the typical low.
+
+        This is used later to calculate the gradient of increase of water level to predict future trends
         """
         if self.typical_range == None:
             return None
