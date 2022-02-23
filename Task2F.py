@@ -27,11 +27,11 @@ def demonstrate_poly_fit(t, d, n):
                 plot_water_levels_with_fit(station, dates, levels, d)
             else:
                 if len(top_five_stations) == 5: #Ensures 5 stations are still printed even if the first one has no data
-                    demonstrate_poly_fit(2, 4, n+1)
+                    demonstrate_poly_fit(t, d, n+1)
                     break
         else: #Ensures 5 stations are still printed even if the first one has no data
             if len(top_five_stations) == 5:
-                demonstrate_poly_fit(2, 4, n+1)
+                demonstrate_poly_fit(t, d, n+1)
                 break
                            
 
