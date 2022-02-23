@@ -98,3 +98,11 @@ def rivers_by_station_number(stations, N):
             break
     
     return top_N_rivers_by_station_number
+
+def get_stations_by_town(stations):
+    for station in stations:
+        town = station.town 
+        if town in stations:
+            stations[town].append(station.name)
+        else:
+            stations[town] = [station.name]
