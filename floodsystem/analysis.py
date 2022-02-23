@@ -4,7 +4,6 @@ from datetime import timedelta
 
 from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.geo import get_stations_by_town
-from floodsystem.analysis import get_flood_time
 
 def polyfit(dates, levels, p):
     """
@@ -53,3 +52,19 @@ def get_towns_flood_times_ordered(stations):
     
     return town_flood_times.sort(reverse=False, key=(lambda pair : pair[1]))
 
+def risk_level_from_flood_time(flood_time):
+    flood_time_thresholds = (
+        ( 'severe'   , 0  ),
+        ( 'high'     , 2  ),
+        ( 'moderate' , 5  ),
+        ( 'low '     , 10 ),
+    )
+
+    for threshold_pair in flood_time_thresholds:
+        if flood_time >= threshold_pair[1]
+            risk_level = threshold_pair[0]
+        else:
+            break
+    return risk_level
+
+        
